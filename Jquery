@@ -1,0 +1,339 @@
+1.Jquery过滤器：
+
+过滤器就是过滤条件，对已经定位到Jquery数组中的Dom对象进行过滤筛选
+如:$("div")=[dom1,dom2,dom3],过滤器的作用就是选择数组中的某个或者某些对象。
+
+
+语法格式：
+
+1.基本过滤器：$("选择器:过滤条件")
+
+2.表单过滤器：$(":选择器:过滤条件")
+
+
+基本过滤器：
+
+1.first：选择数组中第一个DOM对象
+
+  $("选择器:first")
+
+2.last：选择数组中的最后一个DOM对象
+
+  $("selector:last")
+  
+3.选择数组指定DOM对象
+ 
+ $("selector:eq(i)")
+  
+4.选择数组中小于指定索引的所有DOM对象
+
+  $("selector:It(i)")
+  
+5.选择数组中大于指定索引的所有DOM对象
+
+  $("selector:gt(i)")
+  
+
+实例：
+
+<html>
+<head>
+<meta charset="UTF-8" lang="en-us">
+<title>Selector</title>
+
+<style type="text/css">
+
+div{
+    background-color;gray;
+   }
+</style>
+
+
+<script type="text/javascript" src="......."></script>
+<script type="text/javascript">
+  $(function(){
+    $("#btn1").click(function(){
+	  $("div:first").css("background-color","yellow")
+	})
+	
+	 $("#btn2").click(function(){
+	  $("div:last").css("background-color","red")
+	})
+	
+	 $("#btn3").click(function(){
+	  $("div:eq(3)").css("background-color","black")
+	})
+	
+	 $("#btn4").click(function(){
+	  $("div:It(3)").css("background-color","blue")
+	})
+	
+	 $("#btn5").click(function(){
+	  $("div:gt(3)").css("background-color","orange")
+	})
+  
+  })
+
+</script>
+
+</head>
+
+<h3>DIV</h3>
+<body>
+
+<div id="one" >I am div One</div>
+<div id="two" >I am div Two</div>
+
+<div >I am div Three
+<div class="son">I am div3-1</div>
+<div class="son">I am div3-2</div>
+</div>
+
+<div >I am div Four</div>
+<br/>
+<span>I am Span</span>
+<br/>
+
+<h3>Button</h3>
+<input type="button" id="btn1" value="Select Fisrt div"/><br/>
+<input type="button" id="btn2" value="Select last div"/><br/>
+<input type="button" id="btn3" value="Select index eq 3"/><br/>
+<input type="button" id="btn4" value="Select index largeof 3"/><br/>
+<input type="button" id="btn5" value="Select lower than 3"/><br/>
+
+</body>
+</html>
+
+
+表单过滤器类型：
+ 
+1.选择可用文本框：
+
+  $(:text:enable")
+
+2.选择不可用的文本框
+  
+  $("text:disabled")
+  
+3.复选框选中的元素
+
+  $("checkbox:checked")
+  
+4.下拉列表选择器被选中的元素
+
+  $("选择器 >option:selected") 
+  
+  
+ ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  
+ JQUERY函数1：
+ 
+1.val(),操作DOM对象数组的value属性
+
+  $("选择器").val()；无参调用，读取数组中第一个DOM对象的value属性值
+  $("选择器").val(值)：有参调用，对数组中的所有DOM对象统一赋值
+  
+2.text,操作数组中的所有DOM对象的【文字显示内容】
+  
+  $(选择器).text():无参调用，读取数组中的所有DOM对象的文字显示内容，将得到的内容拼接为一个字符串返回
+  $(选择器).text(值)：有参调用，对数组中的所有DOM对象的文字显示内容进行统一赋值
+  
+3.attr,DOM对象属性值操作函数
+  
+  $(选择器).attr("属性名")：获取DOM对象数组的第一个DOM对象属性值
+  $(选择器).attr("属性名","值")：对DOM对象数组中的所有DOM对象属性设置为新值
+  
+实例：
+
+<html>
+<head>
+<meta charset="UTF-8" lang="en-us">
+<title>Selector</title>
+
+<style type="text/css">
+
+div{
+    background-color;gray;
+   }
+</style>
+
+
+<script type="text/javascript" src="......."></script>
+<script type="text/javascript">
+  $(function(){
+     <!--   $("选择器").val() -->
+	 $("#btn1").click(function(){
+	    
+	     var txt=$(":text").val();
+		 alert("我是第一个Text："+txt)
+	 })
+	 
+	 <!--   $("选择器").val(值)； -->
+     $("#btn2").click(function(){
+	     $(":text").val("Three Bro!")
+	 })
+	 
+	 <!-- 获取div的所有文本:$(选择器).text()  -->
+	 
+	 $("#btn3").click(function(){
+	    alert($("div").text());
+	 })
+	 
+	 <!-- 获取第一个div的文本 $(选择器:筛选条件).text()-->
+	 $("#btn4").click(function(){
+	    alert($("div:first").text)
+	 })
+	 
+	 <!--设置div新文本  -->
+	 $(#btn5).click(function(){
+	    $("div").text("I am New Text!")
+	 })
+	 <!-- 设置img图片 -->
+	 $(#btn6).click(function(){
+	    $("img").attr("src",".../.jpg")
+	 })
+  })
+
+</script>
+
+</head>
+
+
+<body>
+<h1>Text</h1>
+<input type="text" value="LIU"/><br/>
+<input type="text" value="GUAN"/><br/>
+<input type="text" value="ZHANG"/><br/>
+
+<h1>Text data</h1>
+<div>I am first div</div>
+<div>I am second div</div>
+<div>I am third div</div>
+
+<h1>Image</h1>
+<image id="img1" src="unknown1 /><br/>
+<image id="img1" src="unknown2 /><br/>
+
+<h3>Function Button</h3>
+<input type="button" id="btn1" >获取第一个文本框的值</button><br/>
+<input type="button" id="btn2" >设置所有文本框为新值</button><br/>
+<input type="button" id="btn3" >获取div的所有文本</button><br/>
+<input type="button" id="btn4" >获取第一个div的文本</button><br/>
+<input type="button" id="btn5" >设置div新文本</button><br/>
+<input type="button" id="btn6" >设置img图片</button><br/>
+
+</body>
+</html>
+  
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  
+ 
+JQUERY函数2：
+1.hide，将数组中所有DOM对象隐藏起来
+  
+  $("选择器").hide()
+  
+2.show,与hide相反，将数组中所有DOM对象在浏览器显示起来
+  
+  $("选择器").show()
+  
+3.remove,将数组中所有DOM对象及其子对象一并删除
+  
+  $("选择器").remove()
+ 
+4.empty,将数组中所有DOM对象的子对象删除
+  
+  $("选择器").empty()
+  
+5.append,为数组中所有的DOM对象添加子对象
+  
+  $("选择器").appen("<div>动态添加的子对象</div>")
+  
+6.html(InnerHTML),设置或返回被选元素的内容
+
+  $("选择器").html():无参调用，获取DOM数组第一个匹配元素的内容
+  $("选择器").html(value):有参调用，设置DOM数组中的所有元素的值
+  
+7.each,对数组、json、dom数组等的遍历方法，对每个元素调用特定函数
+
+  语法1：$.each(遍历对象，function(index,element){处理程序})
+  语法2：JQuery对象.each(function(index,element){处理程序})
+  index：数组下标
+  element：数组元素
+
+
+
+each遍历实例-语法1：
+ 
+ $("#btn9").click(function(){
+    //遍历数组
+    var arr=["a","b","c"]
+	$.each(arr,function(i,n)){alert("数组下标是："+i+"数组成员是："+n)}
+  })
+  
+each遍历实例-语法2：
+
+ $("#btn10").click(function(){
+    //遍历DOM数组，Jquery对象为div
+	$("div").each(function(i,n){alert("Index is："+i+"Ele is :"+n)})
+ })
+  
+  
+ 
+ 
+ —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+ 
+JQUERY事件：
+
+1.on()方法在被选元素上添加事件处理程序
+
+  语法：$("选择器").on(event,data,function)
+  
+  
+实例：
+
+<html>
+<head>
+<meta charset="UTF-8" lang="en-us">
+<title>Selector</title>
+
+<style type="text/css">
+
+div{
+    background-color;gray;
+	width:300px
+	height:200px
+   }
+</style>
+
+<script type="text/javascript" src="...."></script>
+<script type="text/javascript">
+$(function(){
+  $("#btn1").on("click",function(){
+      $("#mydiv").apend("<button id="newbutton">添加了新的Button</button>")
+  })
+  
+  $("#newbutton").on("click",function(){
+    alert("新的Button被Click了")
+  })
+  
+  $("p").on("click",{name:"zhangsan"},function(){
+     alert(event.data.name)
+  })
+   
+})
+
+</script>
+</head>
+
+
+<body>
+
+<p>按钮功能</p>
+<button id="btn1">动态添加Button</button>
+<br><br>
+<div id="mydiv"></div>
+<p>Click Me</p>
+
+</body>
+</html>
