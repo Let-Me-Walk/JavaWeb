@@ -1,0 +1,133 @@
+AJAX实现步骤：
+
+
+1.创建对象方式：
+   var xmlhttp=new XMLHTTPRequest();
+   
+2.onreadstatechange事件：readyState状态改变时，会触发readstatechange事件，此事件可绑定一个处理函数
+  通过判断XMLHttpRequest对象的状态，获取服务端返回的数据
+  xmlHttp.onreadstatechange=function(){
+    if(xmlHttp.readyState==4&&xmlHttp.status==200){
+	  处理服务器返回数据
+	}
+  }
+  
+3.初始化请求参数：open(method,url,async),初始化异步请求对象
+  参数说明：method：请求类型，GET or POST
+            url：服务器的servlet地址
+			async：true(异步) or false(同步)
+			
+  例：xmlHttp.open("GET","http//:192.168.1.1",true)
+  
+4.发送请求：
+   xmlHttp.send()
+   
+5.接收服务器响应的数据：
+  若需要获得来自服务器的响应包，使用XMLHttpRequest对象的responseText或者responseXML属性
+  responseText：接收字符串形式的响应包数据
+  responseXML：接收XML形式的响应包数据
+  
+  ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  
+  2.AJAX-Jquery计算BIM实例：
+  
+  
+  1.需求：计算用户BMI，用户输入升高体重，servlet中计算BMI，并显示BMI计算结果和建议：
+   1)过轻：<18.5
+   2)正常：18.5~23.9
+   3)过重:24~27
+   4)肥胖：28~32
+   5)过度肥胖：>32
+   
+开发步骤：
+1.IDEA创建新工程
+2.配置Tomcat服务器
+3.创建jsp，定义form，参数包括name,weight,height
+  <body>
+    <div style="text/css">
+      <form action="bmiServlet" method="get">
+        NAME:<input type="text" name="name"/></br>
+        HEIGHT:<input type="text" name="height"/></br>
+        WEIGHT:<input type="text" name="weight"/></br>
+      <input type="submit" value="计算BMI">
+      </form>
+    </div>
+  </body>
+  
+4.创建Servlet，命名BMIServlet
+
+  public class BMIServlet extends HttpServlet{
+     @Override
+	 protected void doGet(HttpServletRequest req,HttpServeletResponse resp)throws ServletException,IOException{
+	   String strName=req.getParameter("name");
+	   String strHeight=req.getParameter("height");
+	   String strWeight=req.getParameter("weight");
+	   
+	   //calculator BMI
+	   float weight=Float.parseFloat(strWeight);
+	   float height=Float.parseFloat(strHeight);
+	   flaot bmi=weight/(height*height);
+	   sout(String.format("%s的BMI是%s"，strName，bmi))；
+	   
+	   String msg="";
+	   if(bmi<18.5){
+	     msg="过瘦"；
+	   }else if(18.5<bmi<23.9){
+	     msg="正常"；
+	   }else if(bmi<27&&bmi>24){
+	     msg="过重"；
+	   }else if(bmi<32&&bmi>27){
+	     msg="肥胖"；
+	   }else if(bmi>32){
+	     msg="过度肥胖"；
+	   }
+	   
+	   req.setAttribute("msg",strName+"你的bmi是"+bmi+"，身体"+msg)；
+	   req.getRequestDispatcher("/result.jsp").forward(req,resp);
+	 }
+	 
+  
+  }
+  
+5. 注册servlet
+   <servlet>
+   <servlet-name>bmiServletPrint</servlet-name>
+   <servlet-class>com.bjpowernode.controller.BMIServletPrint</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   <servlet-name>bmiServletPrint</servlet-name>
+   <url-pattern>bmiServletPrint</url-pattern>
+   </servlet-mapping>
+   
+6.使用ajax请求计算bmi
+  <html>
+  <head>
+  <title>BMI Caculator</title>
+  <script type="text/javascript"></script>
+  <script type"text/javascript">
+       function doAjax(){
+	   //创建异步对象
+	     var xmlHttp=new XMLHttpRequest();
+		 //绑定事件
+		 xmlHttp.onreadstatechange=function(){
+		     alert("处理请求的状态： "+xmlHttp.readyState)
+		 }
+		 //初始化参数
+		 xmlHttp.open("get","bmiAjax",true)
+		 //发生ajax异步请求
+		 xmlHttp.send();
+	   }
+  
+  </script>
+  </head>
+  <body>
+  <div style="margin-left:400px">
+  NAME:<input type="text" id="name"> <br/>
+  HEIGHT:<input type="text" id="height">(m)<br/>
+  WEIGHT:<input type="text" id="weight"> (kg)<br/>
+  <input type="button" value="calculator BMI" onclick="doAjax()"><br/>
+  <div id="dataDIV">Wating data updating.......</div>
+  </div>
+  </body>
+  </html> 
